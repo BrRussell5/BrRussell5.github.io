@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Editor Layout</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="toolbar">
+    <div class="left-buttons">
+        <button id="addFile">Add File</button>
+        <button id="undo">Undo</button>
+        <button id="redo">Redo</button>
+    </div>
+    <div class="right-buttons">
+        <button id="export">Export</button>
+    </div>
+</div>
+
+    <div class="main">
+        <div class="clip-options">
+    <h2>Clip Options</h2>
+    <div id="clipActions"></div>
+</div>
+
+        <div class="preview-area">
+            <div class="preview-window">
+                <img src="https://via.placeholder.com/600x400" alt="Preview" class="preview-img">
+                <div class="controls">
+                    <button id="rewind">⏪</button>
+                    <button id="play">▶️</button>
+                    <button id="forward">⏩</button>
+                </div>
+                <div class="timer">0:00</div>
+            </div>
+        </div>
+
+        <div class="effect-options">
+            <h3>Effect Options</h3>
+        </div>
+    </div>
+
+    <div class="timeline">
+        <div class="video-track">
+            <img src="https://via.placeholder.com/20" alt="Video Icon">
+            <div class="track"></div>
+        </div>
+        <div class="audio-track">
+            <img src="https://via.placeholder.com/20" alt="Audio Icon">
+            <div class="track"></div>
+        </div>
+    </div>
+	<div id="fileSelector" class="modal">
+		<div class="modal-content">
+			<h3>Select a File</h3>
+			<button class="file-option" data-type="video">File 1 (Video)</button>
+			<button class="file-option" data-type="video">File 2 (Video)</button>
+			<button class="file-option" data-type="audio">File 3 (Audio)</button>
+			<button id="closeModal">Cancel</button>
+		</div>
+	</div>
+    <script src="script.js"></script>
+</body>
+</html>
