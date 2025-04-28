@@ -102,9 +102,12 @@ function handleClipAction(action) {
         showTextOptions();
     } else if (action === "Trim") {
         showTrimOptions();
-    } else {
+    } else if (action === "Playback Speed") {
+		showSpeedOptions();
+	} else {
         alert(`Action triggered: ${action}`);
     }
+	
 }
 
 function deleteClip(clip) {
@@ -270,4 +273,45 @@ function applyTrim() {
     document.getElementById("clipActions").innerHTML = "";
     clearPreviewImage();
     resetEffectOptions();
+}
+
+function showSpeedOptions() {
+    if (!selectedClip) return;
+
+    const effectBox = document.querySelector(".effect-options");
+    effectBox.innerHTML = "<h3>Speed Options</h3>";
+
+    const speedSelect = document.createElement("select");
+    speedSelect.id = "speedSelect";
+
+    ["x2", "x3", "x0.5", "x0.25"].forEach(speed => {
+        const option = document.createElement("option");
+        option.value = speed;
+        option.textContent = speed;
+        speedSelect.appendChild(option);
+    });
+
+    const applySpeedBtn = document.createElement("button");
+    applySpeedBtn.textContent = "Apply Speed";
+    applySpeedBtn.addEventListener("click", function() {
+        const speed = speedSelect.value;
+        if (!selectedClip) return;
+
+        let scale = 1;
+        if (speed === "x2") scale = 0.5;
+        else if (speed === "x3") scale = 1 / 3;
+        else if (speed === "x0.5") scale = 2;
+        else if (speed === "x0.25") scale = 4;
+
+        const currentWidth = selectedClip.offsetWidth;
+        const newWidth = currentWidth * scale;
+        selectedClip.style.width = newWidth + "px";
+
+        // Optional: deselect after applying speed
+        deselectClip();
+    });
+
+    effectBox.appendChild(speedSelect);
+    effectBox.appendChild(document.createElement("br"));
+    effectBox.appendChild(applySpeedBtn);
 }
