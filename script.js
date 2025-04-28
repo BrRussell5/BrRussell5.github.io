@@ -122,7 +122,7 @@ function showPreviewImage() {
         previewWindow.appendChild(img);
     }
 
-    img.src = "https://via.placeholder.com/800x400.png?text=Clip+Preview";
+    img.src = "assets/exampleVideo.png";
     img.style.display = "block";
 
     updatePreviewText();
