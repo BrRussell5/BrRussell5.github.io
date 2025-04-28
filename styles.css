@@ -6,8 +6,8 @@
 
 body {
     font-family: Arial, sans-serif;
-    background-color: #121212; /* dark background */
-    color: #e0e0e0; /* light text */
+    background-color: #121212;
+    color: #e0e0e0;
 }
 
 .toolbar {
@@ -45,7 +45,7 @@ body {
 }
 
 .toolbar button:hover {
-    background-color: #5a5ac0; /* blue-purple on hover */
+    background-color: #5a5ac0;
 }
 
 .main {
@@ -124,7 +124,7 @@ body {
 }
 
 .video-track img, .audio-track img {
-    filter: brightness(0) invert(1); /* makes icons white */
+    filter: brightness(0) invert(1);
 }
 
 .track {
@@ -143,7 +143,6 @@ body {
     background-color: gray;
 }
 
-/* Modal styles */
 .modal {
     display: none;
     position: fixed;
@@ -213,4 +212,22 @@ body {
     text-align: center;
     pointer-events: none;
     white-space: pre-wrap;
+}
+
+.modal-row {
+    margin-bottom: 15px;
+}
+
+.modal-row label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.modal-row select {
+    width: 100%;
+    padding: 5px;
+    border-radius: 4px;
+    background-color: #2a2a3d;
+    color: #fff;
+    border: 1px solid #555;
 }

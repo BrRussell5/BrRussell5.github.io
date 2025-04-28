@@ -60,6 +60,42 @@
 			<button id="closeModal">Cancel</button>
 		</div>
 	</div>
+	
+	<div id="exportModal" class="modal">
+    <div class="modal-content">
+        <h2>Export Video</h2>
+        <div class="modal-row">
+            <label>File Format:</label>
+            <select id="formatSelect">
+                <option>MP4</option>
+                <option>MKV</option>
+            </select>
+        </div>
+        <div class="modal-row">
+            <label>Save To:</label>
+            <select id="saveSelect">
+                <option>Desktop</option>
+                <option>Documents</option>
+                <option>Pictures</option>
+                <option>Videos</option>
+            </select>
+        </div>
+        <div class="modal-row">
+            <label>Resolution:</label>
+            <select id="resolutionSelect">
+                <option>1920x1080</option>
+                <option>1280x720</option>
+                <option>640x480</option>
+            </select>
+        </div>
+        <button id="confirmExport" style="margin-top: 20px;">Export</button>
+    </div>
+</div>
+
+<div id="exportMessage" style="text-align: center; margin-top: 20px; display: none;">
+    Video export complete!
+</div>
+	
     <script src="script.js"></script>
 </body>
 </html>

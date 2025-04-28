@@ -2,6 +2,10 @@ const addFileBtn = document.getElementById("addFile");
 const fileSelector = document.getElementById("fileSelector");
 const closeModalBtn = document.getElementById("closeModal");
 const fileOptions = document.querySelectorAll(".file-option");
+const exportBtn = document.getElementById("export");
+const exportModal = document.getElementById("exportModal");
+const confirmExport = document.getElementById("confirmExport");
+
 
 let selectedClip = null;
 
@@ -13,10 +17,23 @@ closeModalBtn.addEventListener("click", function() {
     fileSelector.style.display = "none";
 });
 
+exportBtn.addEventListener("click", function() {
+    exportModal.style.display = "block";
+});
+
+confirmExport.addEventListener("click", function() {
+    exportModal.style.display = "none";
+    document.getElementById("exportMessage").style.display = "block";
+
+    setTimeout(() => {
+        document.getElementById("exportMessage").style.display = "none";
+    }, 3000);
+});
+
 fileOptions.forEach(option => {
     option.addEventListener("click", function() {
         const type = this.getAttribute("data-type");
-        const fileName = this.textContent.trim(); // To differentiate "File 1", "File 2", "File 3"
+        const fileName = this.textContent.trim();
         addClip(type, fileName);
         fileSelector.style.display = "none";
     });
@@ -27,7 +44,7 @@ function addClip(type, fileName) {
 	clip.dataset.fadeIn = "false";
 	clip.dataset.fadeOut = "false";
     clip.classList.add("clip");
-    clip.style.width = (fileName.includes("File 1")) ? "200px" : "100px"; // Double width for File 1
+    clip.style.width = (fileName.includes("File 1")) ? "200px" : "100px";
     clip.style.height = "30px";
     clip.style.backgroundColor = "gray";
     clip.style.margin = "5px";
@@ -44,7 +61,6 @@ function addClip(type, fileName) {
         document.querySelector(".audio-track .track").appendChild(clip);
     }
 
-    // Automatically highlight the new clip
     selectClip(clip);
 }
 
@@ -62,7 +78,7 @@ function selectClip(clip) {
 
 function showClipOptions() {
     const clipActions = document.getElementById("clipActions");
-    clipActions.innerHTML = ""; // Clear previous buttons
+    clipActions.innerHTML = "";
 
     const actions = ["Fade", "Text", "Trim", "Playback Speed", "Audio", "Delete"];
 
@@ -87,7 +103,7 @@ function handleClipAction(action) {
     } else if (action === "Trim") {
         showTrimOptions();
     } else {
-        alert(`Action triggered: ${action}`); // Placeholder
+        alert(`Action triggered: ${action}`);
     }
 }
 
@@ -96,7 +112,6 @@ function deleteClip(clip) {
     const width = clip.offsetWidth;
     track.removeChild(clip);
 
-    // Shift all clips to the right of the deleted one
     let clips = Array.from(track.children);
     clips.forEach(c => {
         if (c.offsetLeft > clip.offsetLeft) {
@@ -128,13 +143,13 @@ function showPreviewImage() {
     updatePreviewText();
 }
 
+
 function clearPreviewImage() {
     const img = document.getElementById("placeholderImg");
     if (img) {
         img.style.display = "none";
     }
 }
-
 
 function showFadeOptions() {
     const effectBox = document.querySelector(".effect-options");
@@ -146,14 +161,11 @@ function showFadeOptions() {
         </div>
     `;
 
-    // Set current clip's fade state if already applied
     const fadeIn = selectedClip.dataset.fadeIn === "true";
     const fadeOut = selectedClip.dataset.fadeOut === "true";
 
     document.getElementById("fadeIn").checked = fadeIn;
     document.getElementById("fadeOut").checked = fadeOut;
-
-    // Add event listeners for checkboxes
     document.getElementById("fadeIn").addEventListener("change", function() {
         selectedClip.dataset.fadeIn = this.checked;
     });
@@ -192,7 +204,6 @@ function showTextOptions() {
 
     const textInput = document.getElementById("clipText");
 
-    // Load existing text if the clip has it
     textInput.value = selectedClip.dataset.clipText || "";
 
     textInput.addEventListener("input", function() {
@@ -245,7 +256,6 @@ function applyTrim() {
     const shiftAmount = originalWidth - newWidth;
     selectedClip.style.width = newWidth + "px";
 
-    // Shift all clips on the right
     const track = selectedClip.parentNode;
     let clips = Array.from(track.children);
 
@@ -255,11 +265,9 @@ function applyTrim() {
         }
     });
 
-    // Deselect clip and reset options panel
     selectedClip.style.backgroundColor = "gray";
     selectedClip = null;
     document.getElementById("clipActions").innerHTML = "";
     clearPreviewImage();
     resetEffectOptions();
 }
-
