@@ -80,7 +80,7 @@ function showClipOptions() {
     const clipActions = document.getElementById("clipActions");
     clipActions.innerHTML = "";
 
-    const actions = ["Fade", "Text", "Trim", "Playback Speed", "Audio", "Delete"];
+    const actions = ["Fade 🌫️", "Text 🇹", "Trim ✂️", "Playback Speed 🐢🐰", "Audio 🔊", "Delete 🗑️"];
 
     actions.forEach(action => {
         const btn = document.createElement("button");
@@ -92,17 +92,17 @@ function showClipOptions() {
 }
 
 function handleClipAction(action) {
-    if (action === "Delete") {
+    if (action === "Delete 🗑️") {
         deleteClip(selectedClip);
-    } else if (action === "Fade") {
+    } else if (action === "Fade 🌫️") {
         showFadeOptions();
-    } else if (action === "Text") {
+    } else if (action === "Text 🇹") {
         showTextOptions();
-    } else if (action === "Trim") {
+    } else if (action === "Trim ✂️") {
         showTrimOptions();
-    } else if (action === "Playback Speed") {
+    } else if (action === "Playback Speed 🐢🐰") {
         showSpeedOptions();
-    } else if (action === "Audio") {
+    } else if (action === "Audio 🔊") {
         showAudioOptions();
     }
 }
