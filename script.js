@@ -44,7 +44,7 @@ function addClip(type, fileName) {
 	clip.dataset.fadeIn = "false";
 	clip.dataset.fadeOut = "false";
     clip.classList.add("clip");
-    clip.style.width = (fileName.includes("File 1")) ? "200px" : "100px";
+    clip.style.width = (fileName === "Video1.mp4") ? "300px" : "150px";
     clip.style.height = "30px";
     clip.style.backgroundColor = "gray";
     clip.style.margin = "5px";
@@ -92,8 +92,6 @@ function showClipOptions() {
 }
 
 function handleClipAction(action) {
-    if (!selectedClip) return;
-
     if (action === "Delete") {
         deleteClip(selectedClip);
     } else if (action === "Fade") {
@@ -103,11 +101,10 @@ function handleClipAction(action) {
     } else if (action === "Trim") {
         showTrimOptions();
     } else if (action === "Playback Speed") {
-		showSpeedOptions();
-	} else {
-        alert(`Action triggered: ${action}`);
+        showSpeedOptions();
+    } else if (action === "Audio") {
+        showAudioOptions();
     }
-	
 }
 
 function deleteClip(clip) {
@@ -128,7 +125,6 @@ function deleteClip(clip) {
     resetEffectOptions();
 }
 
-
 function showPreviewImage() {
     const previewWindow = document.querySelector(".preview-window");
     let img = document.getElementById("placeholderImg");
@@ -142,7 +138,6 @@ function showPreviewImage() {
 
     img.src = "assets/exampleVideo.png";
     img.style.display = "block";
-
     updatePreviewText();
 }
 
@@ -187,7 +182,9 @@ function updateOptionsPanel() {
         showTextOptions();
     } else if (effectBox.querySelector("#trimControls")) {
         showTrimOptions();
-    }
+    } else if (effectBox.querySelector("#AudioControls")) {
+		showAudioOptions();
+	}
 }
 
 function resetEffectOptions() {
@@ -250,11 +247,10 @@ function showTrimOptions() {
 }
 
 function applyTrim() {
-    if (!selectedClip) return;
-
-    const sliderValue = document.getElementById("trimSlider").value;
+    const slider = document.getElementById("trimSlider");
     const originalWidth = selectedClip.offsetWidth;
-    const newWidth = Math.max(20, (originalWidth * (sliderValue / 100)));
+    const newWidth = Math.max(20, (originalWidth * (slider.value / 100)));
+	slider.value = 100;
 
     const shiftAmount = originalWidth - newWidth;
     selectedClip.style.width = newWidth + "px";
@@ -267,19 +263,11 @@ function applyTrim() {
             c.style.left = (c.offsetLeft - shiftAmount) + "px";
         }
     });
-
-    selectedClip.style.backgroundColor = "gray";
-    selectedClip = null;
-    document.getElementById("clipActions").innerHTML = "";
-    clearPreviewImage();
-    resetEffectOptions();
 }
 
 function showSpeedOptions() {
-    if (!selectedClip) return;
-
     const effectBox = document.querySelector(".effect-options");
-    effectBox.innerHTML = "<h3>Speed Options</h3>";
+    effectBox.innerHTML = "<h2>Speed Options</h2>";
 
     const speedSelect = document.createElement("select");
     speedSelect.id = "speedSelect";
@@ -306,12 +294,31 @@ function showSpeedOptions() {
         const currentWidth = selectedClip.offsetWidth;
         const newWidth = currentWidth * scale;
         selectedClip.style.width = newWidth + "px";
-
-        // Optional: deselect after applying speed
-        deselectClip();
     });
 
     effectBox.appendChild(speedSelect);
     effectBox.appendChild(document.createElement("br"));
     effectBox.appendChild(applySpeedBtn);
+}
+
+function showAudioOptions() {
+const effectBox = document.querySelector(".effect-options");
+    effectBox.innerHTML = `
+        <h2>Audio Options</h2>
+        <div id="audioControls">
+            <input type="range" id="volumeSlider" min="10" max="100" value="100" style="width: 100%;">
+        </div>
+    `;
+
+    const volumeLabel = document.createElement("label");
+    volumeLabel.textContent = "Volume";
+    volumeLabel.setAttribute("for", "volumeSlider");
+
+    volumeSlider.addEventListener("input", function() {
+        selectedClip.dataset.volume = volumeSlider.value;
+    });
+
+    effectBox.appendChild(volumeLabel);
+    effectBox.appendChild(document.createElement("br"));
+    effectBox.appendChild(volumeSlider);
 }
